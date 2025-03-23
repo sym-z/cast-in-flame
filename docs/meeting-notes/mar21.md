@@ -12,8 +12,8 @@
 
 # Schedule
 ---
-1. Repo setup, rules around file hierarchy, palette choice
-2. Game creation, project setting defaults
+1. ~~Repo setup, rules around file hierarchy~~, palette choice
+2. ~~Game creation, project setting defaults~~
 3. Levels
 	1. Level Scene Architecture
 		1. How do Boss Levels fit?
@@ -22,16 +22,16 @@
 				1. Chest
 				2. Shop
 				3. Camp (Stretch)
-			2. Props (Destructables/Traps)
-	2. Level Generation (Zoom/Pan Debug)
+			2. Sprinkle Props (Destructables/Traps)
+	2. ~~Level Generation (Zoom/Pan Debug)~~
 		1. Terrain
 		2. Collision
 		3. Tweakable Parameters
-			1. Size of the level (Tile x Tile)
-			2. Walk Depth
+			1. ~~Size of the level (Tile x Tile)~~
+			2. ~~Walk Depth~~
 			3. Required distance between entry and exit points
 		4. Refinement
-			1. Making sure the generation doesn't extend to the end of the world
+			1. ~~Making sure the generation doesn't extend to the end of the world~~
 			2. Sensible entry and exit points
 	3. Scene Transitions (Level to Level) (Next Scene Debug Button)
 4.  Player
@@ -136,3 +136,7 @@
 	3. Fishing Minigame
 	4. Dev console
 
+# Whiteboards Used
+---
+![Image](/whiteboards/tile-deliberation.png)
+![Image](/whiteboards/currency-planning.png)

@@ -1,0 +1,5 @@
+# Get rid of obsidian specific documents
+app.json
+appearance.json
+core-plugins.json
+workspace.json

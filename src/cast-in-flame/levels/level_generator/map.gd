@@ -23,13 +23,13 @@ func config_map(arg_size: Vector2i):
 		for y in range(size.y):
 			matrix [x].append(Tile.new())
 
-func get_tile_type(pos):
+func get_tile_type(pos: Vector2i):
 	var tile = get_tile(pos)
 	if tile == null:
 		return null
 	return tile.type
 
-func get_tile(pos):
+func get_tile(pos: Vector2i):
 	if not in_bounds(pos):
 		printerr (" accessing tile out of bounds")
 		return null
@@ -38,7 +38,7 @@ func get_tile(pos):
 #TODO change the reset position to something else- does not suit large rectangular maps. 
 #Maybe grab random walkable tile ^
 #TODO handle theoritcal endless walk- maybe prevent consecutive skips
-func random_walk(floor_density, edge_offset):
+func random_walk(floor_density: float, edge_offset: int):
 	"""
 	Generation method for placing a tile, then walking to a new postion
 	floor_density: Density of floor tile placement relative to size
@@ -82,7 +82,7 @@ func print_map():
 				row += "_"
 		print(row)
 
-func in_bounds(pos, offset = 0):
+func in_bounds(pos: Vector2i, offset: int = 0) -> bool:
 	"""
 	Returns true if arg is out of bounds
 	offset argument allows you to close the bounds further for this case

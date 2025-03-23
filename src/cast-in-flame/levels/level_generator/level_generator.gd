@@ -7,7 +7,7 @@ class_name LevelGenerator
 ## How densely packed the floor tiles are placed in bounds of the map
 @export_range(.01,.5) var floor_density: float = .3
 # This is the distance between the edge of the map and the edge of the walk
-var edge_offset = 7
+var edge_offset: int = 7
 var map: Map
 
 # Makes a map, fills it with tiles, walks and sets tiles' type, sets tile sprite
