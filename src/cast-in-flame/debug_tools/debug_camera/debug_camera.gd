@@ -1,9 +1,9 @@
 extends Camera2D
 
-
 var cam_speed = 200
 var zoom_factor = 1.2
 
+# Reads inputs to move or zoom camera
 func _process(delta):
 	var move_vector = Vector2()
 	if Input.is_action_pressed("debug_camera_down"):
@@ -15,7 +15,6 @@ func _process(delta):
 	if Input.is_action_pressed("debug_camera_right"):
 		move_vector += Vector2.RIGHT
 	position += (cam_speed / zoom.x) * move_vector.normalized() * delta
-	
 	
 	if Input.is_action_pressed("debug_camera_zoom_in"):
 		zoom *= zoom_factor
