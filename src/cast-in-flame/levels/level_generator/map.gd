@@ -24,13 +24,13 @@ func config_map(arg_size: Vector2i, arg_edge_offset: int = 0):
 	for x in range(size.x):
 		matrix.append([])
 		for y in range(size.y):
-			matrix [x].append(Tile.new())
+			matrix[x].append(Tile.new())
 
 func add_structure(structure: StructureDetails):
 	for i in range(20):
 		var origin = get_random_pos()
 		if structure_in_bounds(structure, origin):
-			if not check_for_type(structure.size, origin, tile_types.STRUCTURE):
+			if not check_for_type_in_area(structure.size, origin, tile_types.STRUCTURE):
 				for x in range(structure.size.x):
 					for y in range(structure.size.y):
 						var pos = origin + Vector2i(x,y)
@@ -39,7 +39,7 @@ func add_structure(structure: StructureDetails):
 				structure.origin = origin
 				return
 
-func check_for_type(range_size: Vector2i, origin: Vector2i, type: tile_types)-> bool:
+func check_for_type_in_area(range_size: Vector2i, origin: Vector2i, type: tile_types) -> bool:
 	for x in range(range_size.x):
 		for y in range(range_size.y):
 			var pos = origin + Vector2i(x,y)
@@ -48,18 +48,18 @@ func check_for_type(range_size: Vector2i, origin: Vector2i, type: tile_types)-> 
 				return true
 	return false
 
-func get_random_pos()-> Vector2i:
+func get_random_pos() -> Vector2i:
 	return Vector2i(randi_range(edge_offset, size.x- edge_offset), randi_range(edge_offset, size.y - edge_offset))
 
-func is_connected_to_map(structure: StructureDetails)-> bool:
+func is_connected_to_map(structure: StructureDetails) -> bool:
 	for x in range(structure.origin.x - 1, structure.origin.x + structure.size.x + 1):
 		if x == structure.origin.x - 1 || structure.origin.x + structure.size.x + 1:
 			for y in range(structure.origin.y - 1, structure.origin.y + structure.size.y + 1):
-				if check_for_type(Vector2i(1,1), structure.origin, tile_types.FLOOR ):
+				if get_tile_type(Vector2i(x,y)) == tile_types.FLOOR:
 					return true
 		else:
 			for y in [structure.origin.y - 1, structure.origin.y + structure.size.y + 1]:
-				if check_for_type(Vector2i(1,1), structure.origin, tile_types.FLOOR ):
+				if get_tile_type(Vector2i(x,y)) == tile_types.FLOOR:
 					return true
 	return false
 
@@ -81,7 +81,7 @@ func connect_to_map(structure):
 			var tile = get_tile(walk_pos)
 			tile.type = tile_types.FLOOR
 		
-func structure_in_bounds(structure: StructureDetails, pos: Vector2i):
+func structure_in_bounds(structure: StructureDetails, pos: Vector2i) -> bool:
 	if in_bounds(pos) and  in_bounds(pos + structure.size):
 		return true
 	return false
@@ -123,7 +123,7 @@ func random_walk(floor_density: float):
 			look_tile.type = tile_types.FLOOR
 			placed_tiles += 1
 
-func pick_random_direction()->Vector2i:
+func pick_random_direction() -> Vector2i:
 	var chance = randi_range(0,3)
 	var dirs = [
 		Vector2i.UP,
