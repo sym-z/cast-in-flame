@@ -5,4 +5,7 @@
 - proper terrain
 - collision
 - start on player
-- 
+
+# Whiteboards Used
+---
+![Image](../whiteboards/structure-algorithms.png)

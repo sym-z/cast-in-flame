@@ -39,13 +39,13 @@ func render_tile_map():
 			else:
 				floor_tiles.set_cell(Vector2i(x,y),0, Vector2i(9, 9))
 
-func create_structures(structure_prefabs: Array[PackedScene]):
-	var structure_instances = []
+func create_structures(structure_prefabs: Array[PackedScene]) -> Array[Node2D]:
+	var structure_instances: Array[Node2D] = []
 	for prefab in structure_prefabs:
 		structure_instances.append( create_structure(prefab) )
 	return structure_instances
 
-func create_structure(prefab:PackedScene):
+func create_structure(prefab: PackedScene) -> Node2D:
 	var instance = prefab.instantiate()
 	add_child(instance)
 	map.add_structure(instance.details)
