@@ -50,5 +50,5 @@
 	- generates the map
 # Discord Whiteboards
 ---
-![Image](/whiteboards/structure-brainstorm.png)
-![Image](/whiteboards/walk-offset.png)
+![Image](../whiteboards/structure-brainstorm.png)
+![Image](../whiteboards/walk-offset.png)
