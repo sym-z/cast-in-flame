@@ -77,7 +77,7 @@ func connect_to_map(structure: StructureDetails):
 		else:
 			walk_pos.y += sign(walk_dir.y)
 		var look_type = get_tile_type(walk_pos)
-		if look_type == tile_types.FLOOR:
+		if look_type == tile_types.FLOOR || walk_pos == origin:
 			return
 		if look_type != tile_types.STRUCTURE:
 			var tile = get_tile(walk_pos)
@@ -96,7 +96,7 @@ func get_tile_type(pos: Vector2i):
 
 func get_tile(pos: Vector2i):
 	if not in_bounds(pos):
-		printerr (" accessing tile out of bounds")
+		printerr (" accessing tile out of bounds at ", pos)
 		return null
 	return matrix[pos.x][pos.y]
 
