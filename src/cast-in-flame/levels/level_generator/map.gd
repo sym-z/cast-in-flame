@@ -67,7 +67,7 @@ func connect_to_map(structure):
 	var origin = size/2
 	if is_connected_to_map(structure):
 		return
-	var walk_pos: Vector2i = (structure.origin+ (structure.size/2) )
+	var walk_pos: Vector2i = (structure.origin + (structure.size/2) )
 	while true:
 		var walk_dir = origin - walk_pos
 		if abs(walk_dir.x) > abs (walk_dir.y):
@@ -137,12 +137,13 @@ func print_map():
 	'''
 	A debug option for print map to console
 	'''
-	for x in matrix:
+	for y in range(size.y):
 		var row = ""
-		for tile in x:
-			if tile.type == tile_types.FLOOR:
+		for x in range(size.x):
+			var tile = matrix[x][y].type
+			if tile == tile_types.FLOOR:
 				row += "#"
-			elif tile.type == tile_types.STRUCTURE:
+			elif tile == tile_types.STRUCTURE:
 				row += "$"
 			else:
 				row += "_"

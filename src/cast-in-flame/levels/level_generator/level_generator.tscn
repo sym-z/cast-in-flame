@@ -13,3 +13,4 @@ floor_density = 0.107
 tile_set = ExtResource("2_mt14d")
 
 [node name="Debug Camera" parent="." instance=ExtResource("3_1vts4")]
+zoom = Vector2(0.09, 0.09)

@@ -15,7 +15,7 @@ var map: Map
 func _ready():
 	map = Map.new()
 	map.config_map(map_size, edge_offset)
-	var room_instances =create_structures([chest_room,chest_room,chest_room])
+	var room_instances = create_structures([chest_room,chest_room,chest_room,chest_room,chest_room,chest_room,])
 	map.random_walk(floor_density)
 	for instance in room_instances:
 		map.connect_to_map(instance.details)
@@ -30,8 +30,8 @@ func render_tile_map():
 		for y in map.size.y:
 			if map.in_bounds(Vector2i(x,y)):
 				var tile_type = map.get_tile_type(Vector2i(x,y))
-				if tile_type == map.tile_types.FLOOR or tile_type == map.tile_types.WALL:
-					floor_tiles.set_cell(Vector2i(x,y),0, Vector2i(randi_range(0,9), randi_range(0,9)))
+				if tile_type == map.tile_types.FLOOR:
+					floor_tiles.set_cell(Vector2i(x,y),0, Vector2i(randi_range(0,8), randi_range(0,8)))
 				elif tile_type == map.tile_types.STRUCTURE:
 					pass
 				else:
