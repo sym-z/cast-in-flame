@@ -138,5 +138,5 @@
 
 # Whiteboards Used
 ---
-![Image](/whiteboards/tile-deliberation.png)
-![Image](/whiteboards/currency-planning.png)
+![Image](../whiteboards/tile-deliberation.png)
+![Image](../whiteboards/currency-planning.png)
