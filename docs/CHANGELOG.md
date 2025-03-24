@@ -10,3 +10,7 @@
 - Created debug camera
 - Created input for debug camera (zoom + pan)
 - Rendered tilemap using tilemap layer
+
+## version 0.1.1
+- Added documentation for version 0.1, and March 22nd's meeting
+- Cleaned up spacing for type definitions and added type definitions to parameters used in functions in `level_generator.gd` and `map.gd`
