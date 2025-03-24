@@ -26,7 +26,7 @@ The central script involved with invoking the functions used to build the map in
 ---
 ### `_ready()`
 ---
-- Creates a new [[map.gd]] object
+- Creates a new [map.gd](../custom-resources/map.gd.md) object
 - Calls the function `config_map` in the map object's code to allocate memory for the tiles
 - Calls the map's `random_walk()` function to associate a tile type for each allocated spot on the map
 - Calls its own `render_tile_map()` function to assign a visualization to those tiles based on the type
