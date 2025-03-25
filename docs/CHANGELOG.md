@@ -20,3 +20,9 @@
 - Stuctures are prefabs built on tilemaps, so they can be placed into the world tilemap seamlessly
 - See chest room structure as example
 - Created structure details resource
+
+## version 0.2.1
+- Added documentation for Mar23 meeting
+- Renamed files and cleaned up code
+- Fixed bug with connecting structures back to the map
+- Finalized plans for Mar24 meeting
