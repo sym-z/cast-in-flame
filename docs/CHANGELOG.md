@@ -14,3 +14,9 @@
 ## version 0.1.1
 - Added documentation for version 0.1, and March 22nd's meeting
 - Cleaned up spacing for type definitions and added type definitions to parameters used in functions in `level_generator.gd` and `map.gd`
+
+## version 0.2
+- World generation now generates structures 
+- Stuctures are prefabs built on tilemaps, so they can be placed into the world tilemap seamlessly
+- See chest room structure as example
+- Created structure details resource
