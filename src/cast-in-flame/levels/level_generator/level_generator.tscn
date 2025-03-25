@@ -8,7 +8,7 @@
 [node name="Level Generator" type="Node2D" node_paths=PackedStringArray("floor_tiles")]
 script = ExtResource("1_mpksv")
 floor_tiles = NodePath("Floor Tiles")
-floor_density = 0.044
+floor_density = 0.25
 
 [node name="Floor Tiles" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_mt14d")
