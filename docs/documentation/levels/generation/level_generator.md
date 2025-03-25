@@ -30,6 +30,8 @@ The central script involved with invoking the functions used to build the map in
 	- How close the random walk can get to the edge of the map
 - `map`
 	- The map object itself that will be represented to the player.
+- `layers`
+	- Holds a dictionary that allows the wall auto-tiling to find the references to the correct TileMapLayer node when layering walls
 ## Functions
 ---
 ### `_ready()`
@@ -43,6 +45,12 @@ The central script involved with invoking the functions used to build the map in
 - Walks through the map object, looks at the type of each tile, and creates a visual representation of the tile based on its type, and the level it is meaning to represent.
 - Right now, both the `WALL` and `FLOOR` type render as the floor, and all other tiles will be what we call the `NULL` tile, which indicates a non-playable space.
 
+# `render_walls()`
+---
+- `tileset_coordinate` is a variable that holds the atlas coordinates of the correct facing wall in the tileset
+- Using the walls tileset, this function iterates through all of the tiles in the map
+	- If the current tile has no tile type
+	- The correct wall tiles are drawn using the tile object's built in `walls` variable, that is calculated in the `map`'s function, `decide_all_walls()`
 ## `create_structures(structure_prefabs: Array[PackedScene]) -> Array[Node2D]`
 ---
 - Given an array of structure scenes to create, this function creates them within the map, and instances them in the map's scene.

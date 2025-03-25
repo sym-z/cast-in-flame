@@ -43,9 +43,8 @@ A custom resource that holds [tile.gd](../generation/custom-resources/tile.gd.md
 ---
 - Used after the random walk has generated floor tiles in order to tie the random walk map to structures
 - Checks the tiles that surround the borders of the structure to see if any of the tiles are floor tiles
-- Checks the left column, then iterates through the top and bottom rows of the border, then checks the right column
-- Returns true if it finds a floor tile that surrounds it.
-- **NOTE**: Currently we need to fix the condition that it will return true if it is touching a floor tile directly to its diagonal.
+- Uses the function, `check_for_type_in_area()` to check the surrounding tiles of the structure while also not including the corners
+- Returns true if it finds a floor tile that surrounds it cardinally.
 
 ## `connect_to_map(structure: StructureDetails)`
 ---
@@ -85,3 +84,30 @@ A custom resource that holds [tile.gd](../generation/custom-resources/tile.gd.md
 ## `in_bounds(pos:Vector2i, offset:int) -> bool`
 ---
 - Returns a boolean identifying if a position given in a vector is inside of the bounds of the map, with an optional parameter, `offset` to constrain the value to the available walking space of the random walk.
+
+## `is_valid_tile(pos: Vector2i) -> bool`
+---
+- Returns true if the `pos` is inside the map itself, not regarding the `edge_offset`. Returns false otherwise.
+
+## `decide_all_walls()`
+---
+- Iterates through all tiles in the current map, and runs the function to decide their walls
+
+## `decide_walls(pos: Vector2i)`
+---
+- Decides what walls should be placed on a tile at the given position, `pos`.
+- `direction_rules`
+	- Dictionary that associates the neccessary conditions for a wall to be placed on each of the neighbors of a tile with a key that will be appended to the tile's `wall` property if it meets said conditions
+- `directions`
+	- An iterable array that makes the for loop that assigns the walls to the neighboring tiles more readable
+- `displacement_vector`
+	- A dictionary that tracks the necessary offset from the current tile to use when checking its neighbors
+- The algorithm grabs the tile
+	- and for each tile that neighbors it
+	- it grabs the requirements for a tile to be placed in that direction
+	- It peeks at the tile in that direction
+		- if it is a valid tile and it is a floor or structure tile
+		- it checks to see if a floor tile in that direction satisfies the requirements for a wall in that direction
+		- If it doesn't, it moves on to the next requirement in that direction, or the next direction to check
+	- If the tile satisfies all of the conditions of that direction and has a floor or structure tile in that direction, it adds that direction to its `tile.walls` array of strings to be rendered.
+	- Currently, all tiles are assigned walls regardless of type, but only the tiles with no assigned type have their walls rendered.
