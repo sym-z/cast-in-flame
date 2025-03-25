@@ -1,0 +1,1 @@
+A custom resource that keeps track of the size of the structure, and its assigned origin point on the map, so that after the tiles are marked for structures, they can be instantiated and moved to the proper position on the map during the rendering stage of level generation.

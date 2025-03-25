@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cd5swiictp31o" path="res://assets/environment/graybox_structure.png" id="2_3gt42"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fd61o"]
-resource_name = "<null>"
+resource_name = "graybox_structure"
 texture = ExtResource("2_3gt42")
 texture_region_size = Vector2i(240, 240)
 0:0/0 = 0

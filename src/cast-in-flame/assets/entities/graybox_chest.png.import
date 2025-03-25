@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bgulj2w5uvkeq"
-path="res://.godot/imported/gray_box_chest.png-55ccc4707fe03d6b711a31ab48369cc6.ctex"
+path="res://.godot/imported/graybox_chest.png-2c645266df2f48fb9c2f7132e0e12d06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/entities/gray_box_chest.png"
-dest_files=["res://.godot/imported/gray_box_chest.png-55ccc4707fe03d6b711a31ab48369cc6.ctex"]
+source_file="res://assets/entities/graybox_chest.png"
+dest_files=["res://.godot/imported/graybox_chest.png-2c645266df2f48fb9c2f7132e0e12d06.ctex"]
 
 [params]
 

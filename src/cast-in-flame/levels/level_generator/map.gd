@@ -51,6 +51,8 @@ func check_for_type_in_area(range_size: Vector2i, origin: Vector2i, type: tile_t
 func get_random_pos() -> Vector2i:
 	return Vector2i(randi_range(edge_offset, size.x- edge_offset), randi_range(edge_offset, size.y - edge_offset))
 
+# FIXME: Write a function or find a way to make sure it is not returning a false positive when checking a floor tile
+	# directly to its diagonal.
 func is_connected_to_map(structure: StructureDetails) -> bool:
 	for x in range(structure.origin.x - 1, structure.origin.x + structure.size.x + 1):
 		if x == structure.origin.x - 1 || structure.origin.x + structure.size.x + 1:
@@ -63,7 +65,7 @@ func is_connected_to_map(structure: StructureDetails) -> bool:
 					return true
 	return false
 
-func connect_to_map(structure):
+func connect_to_map(structure: StructureDetails):
 	var origin = size/2
 	if is_connected_to_map(structure):
 		return
@@ -75,7 +77,7 @@ func connect_to_map(structure):
 		else:
 			walk_pos.y += sign(walk_dir.y)
 		var look_type = get_tile_type(walk_pos)
-		if look_type == tile_types.FLOOR:
+		if look_type == tile_types.FLOOR || walk_pos == origin:
 			return
 		if look_type != tile_types.STRUCTURE:
 			var tile = get_tile(walk_pos)
@@ -94,7 +96,7 @@ func get_tile_type(pos: Vector2i):
 
 func get_tile(pos: Vector2i):
 	if not in_bounds(pos):
-		printerr (" accessing tile out of bounds")
+		printerr (" accessing tile out of bounds at ", pos)
 		return null
 	return matrix[pos.x][pos.y]
 

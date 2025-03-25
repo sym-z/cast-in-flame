@@ -7,6 +7,14 @@
 ---
 The central script involved with invoking the functions used to build the map in memory, and assigns a visual representation to the tile objects.
 
+# How Levels are Currently Generated
+---
+- A Map is allocated in memory and using a given size and is given an edge offset so that the generation has space from the edge of the map
+- Structures are then added to the map at random positions by marking tiles as `STRUCTURE` tiles, and their instances are placed at the proper positions
+- A random walk is performed, marking tiles as `FLOOR` tiles
+- The map makes sure all structures are connected to the map and connects them if they aren't
+- The map is given a visual representation using the TileMapLayer for the level's floor
+
 ## Exported Variables
 ---
 - `floor_tiles`
@@ -34,3 +42,14 @@ The central script involved with invoking the functions used to build the map in
 ---
 - Walks through the map object, looks at the type of each tile, and creates a visual representation of the tile based on its type, and the level it is meaning to represent.
 - Right now, both the `WALL` and `FLOOR` type render as the floor, and all other tiles will be what we call the `NULL` tile, which indicates a non-playable space.
+
+## `create_structures(structure_prefabs: Array[PackedScene]) -> Array[Node2D]`
+---
+- Given an array of structure scenes to create, this function creates them within the map, and instances them in the map's scene.
+- The function then return's the array of structures to the caller so that the can be connected to the map.
+
+## `create_structure(prefab: PackedScene) -> Node2D`
+---
+- Creates an instance of the packed scene, and adds it to the tree
+- Then takes the Structure's details and creates a spot for it on the map by marking tiles as `STRUCTURE` tiles.
+- Afterward it places the instanced scene at the spot marked on the map for it, and returns it to the `create_structures()` function so that that function can return it's array of instances to connect to the random walked map.
