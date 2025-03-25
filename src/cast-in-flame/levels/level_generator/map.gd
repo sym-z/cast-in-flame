@@ -54,15 +54,18 @@ func get_random_pos() -> Vector2i:
 # FIXME: Write a function or find a way to make sure it is not returning a false positive when checking a floor tile
 	# directly to its diagonal.
 func is_connected_to_map(structure: StructureDetails) -> bool:
-	for x in range(structure.origin.x - 1, structure.origin.x + structure.size.x + 1):
-		if x == structure.origin.x - 1 || structure.origin.x + structure.size.x + 1:
-			for y in range(structure.origin.y - 1, structure.origin.y + structure.size.y + 1):
-				if get_tile_type(Vector2i(x,y)) == tile_types.FLOOR:
-					return true
-		else:
-			for y in [structure.origin.y - 1, structure.origin.y + structure.size.y + 1]:
-				if get_tile_type(Vector2i(x,y)) == tile_types.FLOOR:
-					return true
+	#Top Edge of structure (no corners)
+	if check_for_type_in_area(Vector2i(structure.size.x,1), structure.origin - Vector2i(0,1), tile_types.FLOOR):
+		return true
+	#Bottom edge (no corners)
+	if check_for_type_in_area(Vector2i(structure.size.x,1), structure.origin + Vector2i(0, structure.size.y), tile_types.FLOOR):
+		return true
+	#Left edge (no corners)
+	if check_for_type_in_area(Vector2i(1,structure.size.y), structure.origin - Vector2i(1,0), tile_types.FLOOR):
+		return true
+	#Right edge (no corners)
+	if check_for_type_in_area(Vector2i(1,structure.size.y), structure.origin + Vector2i(structure.size.x, 0), tile_types.FLOOR):
+		return true
 	return false
 
 func connect_to_map(structure: StructureDetails):
@@ -95,7 +98,7 @@ func get_tile_type(pos: Vector2i):
 	return tile.type
 
 func get_tile(pos: Vector2i):
-	if not in_bounds(pos):
+	if not is_valid_tile(pos):
 		printerr (" accessing tile out of bounds at ", pos)
 		return null
 	return matrix[pos.x][pos.y]
@@ -116,14 +119,14 @@ func random_walk(floor_density: float):
 	var walk_pos = start_pos
 	
 	while placed_tiles < tiles_to_walk:
-		walk_pos += pick_random_direction()
-		if not in_bounds(walk_pos):
-			walk_pos = start_pos
-		
 		var look_tile = get_tile(walk_pos)
 		if look_tile.type == null:
 			look_tile.type = tile_types.FLOOR
 			placed_tiles += 1
+		
+		walk_pos += pick_random_direction()
+		if not in_bounds(walk_pos):
+			walk_pos = start_pos
 
 func pick_random_direction() -> Vector2i:
 	var chance = randi_range(0,3)
@@ -157,3 +160,50 @@ func in_bounds(pos: Vector2i) -> bool:
 	offset argument allows you to close the bounds further for this case
 	"""
 	return pos.x >= edge_offset && pos.x < size.x- edge_offset && pos.y >= edge_offset && pos.y < size.y - edge_offset
+
+func is_valid_tile(pos: Vector2i) -> bool:
+	return pos.x >= 0 && pos.x < size.x && pos.y >= 0 && pos.y < size.y
+
+func decide_all_walls():
+	for x in size.x:
+		for y in size.y:
+			decide_walls(Vector2i(x,y))
+
+func decide_walls(pos: Vector2i):
+	'''
+	Decides what walls are placed to a given tile
+	'''
+	var direction_rules = {
+		"north" : {"north": true},
+		"west": {"west": true},
+		"east":{"east": true},
+		"south": {"south": true},
+		"nw": {"north": false, "nw": true, "west": false},
+		"sw": {"south": false, "sw": true, "west": false},
+		"ne": {"north": false, "ne": true, "east": false},
+		"se": {"south": false, "se": true, "east": false}
+	}
+	var directions = direction_rules.keys()
+	var displacement_vector = {
+		"north" :Vector2i(0,-1),
+		"west":Vector2i(-1,0),
+		"east":Vector2i(1,0),
+		"south":Vector2i(0,1),
+		"nw":Vector2i(-1,-1),
+		"sw":Vector2i(-1,1),
+		"ne":Vector2i(1,-1),
+		"se":Vector2i(1,1)
+	}
+	var tile = get_tile(pos)
+	for direction in directions:
+		var place_wall = true
+		var current_requirements = direction_rules[direction].keys()
+		for requirement in current_requirements:
+			var peek_pos = displacement_vector[requirement] + pos
+			var is_floor = is_valid_tile(peek_pos) && ( get_tile(peek_pos).type == tile_types.FLOOR || get_tile(peek_pos).type == tile_types.STRUCTURE)
+			if is_floor != direction_rules[direction][requirement]:
+				place_wall = false
+				break
+				
+		if place_wall: 
+			tile.walls.append(direction)

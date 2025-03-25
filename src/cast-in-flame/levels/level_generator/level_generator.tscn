@@ -1,16 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddjyw4ppjeiiv"]
+[gd_scene load_steps=5 format=3 uid="uid://ddjyw4ppjeiiv"]
 
 [ext_resource type="Script" uid="uid://blf43tknsgvhe" path="res://levels/level_generator/level_generator.gd" id="1_mpksv"]
 [ext_resource type="TileSet" uid="uid://b3v7yvqhhl7g5" path="res://levels/level_generator/floors.tres" id="2_mt14d"]
 [ext_resource type="PackedScene" uid="uid://eob5cqds8ies" path="res://debug_tools/debug_camera/debug_camera.tscn" id="3_1vts4"]
+[ext_resource type="TileSet" uid="uid://ocgd1s8cx3p4" path="res://levels/level_generator/walls.tres" id="4_breqj"]
 
 [node name="Level Generator" type="Node2D" node_paths=PackedStringArray("floor_tiles")]
 script = ExtResource("1_mpksv")
 floor_tiles = NodePath("Floor Tiles")
-floor_density = 0.107
+floor_density = 0.044
 
 [node name="Floor Tiles" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_mt14d")
 
+[node name="North" type="TileMapLayer" parent="."]
+tile_set = ExtResource("4_breqj")
+
+[node name="South" type="TileMapLayer" parent="."]
+tile_set = ExtResource("4_breqj")
+
+[node name="East" type="TileMapLayer" parent="."]
+tile_set = ExtResource("4_breqj")
+
+[node name="West" type="TileMapLayer" parent="."]
+tile_set = ExtResource("4_breqj")
+
+[node name="NW" type="TileMapLayer" parent="."]
+tile_set = ExtResource("4_breqj")
+
+[node name="NE" type="TileMapLayer" parent="."]
+tile_set = ExtResource("4_breqj")
+
+[node name="SW" type="TileMapLayer" parent="."]
+tile_set = ExtResource("4_breqj")
+
+[node name="SE" type="TileMapLayer" parent="."]
+tile_set = ExtResource("4_breqj")
+
 [node name="Debug Camera" parent="." instance=ExtResource("3_1vts4")]
+position = Vector2(6628.44, 6000)
 zoom = Vector2(0.09, 0.09)
