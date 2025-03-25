@@ -56,10 +56,10 @@ A custom resource that holds [tile.gd](../generation/custom-resources/tile.gd.md
 ---
 - Checks given a position on a map and a structure's size if a structure can fit on the map given the map's edge offset
 
-
 ## `get_tile_type(pos : Vector2i)`
 ---
 - Returns the type of the tile at the given position, `pos`
+
 ## `get_tile(pos : Vector2i)`
 ---
 - Checks if the position given is in bounds, prints an error and returns null if not
@@ -73,6 +73,7 @@ A custom resource that holds [tile.gd](../generation/custom-resources/tile.gd.md
 	- If there is no tile type set on that space, it marks that tile as a floor tile, and increments the count of tiles it has walked
 	- If it tries to walk off of the edge of the map, it then moves the position of the walk back to the center.
 	- Once it has walked the total amount of tiles calculated to walk given the edge offset and density (`tiles_to_walk`)
+
 ## `pick_random_direction() -> Vector2i`
 ---
 - Returns a vector pointing up, down, left or right to be used by the random walk function
