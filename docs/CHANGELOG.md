@@ -26,3 +26,8 @@
 - Renamed files and cleaned up code
 - Fixed bug with connecting structures back to the map
 - Finalized plans for Mar24 meeting
+
+## version 0.2.2
+- Fixed bugs related to structure generation
+- Added wall auto tiling
+- Created player scaffold
