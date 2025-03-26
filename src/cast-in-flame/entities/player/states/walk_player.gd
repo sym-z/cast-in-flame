@@ -3,6 +3,7 @@ extends State
 @onready var player: Player = get_parent().character
 
 var is_active = false
+var lock_direction = false
 
 func enter():
 	player.can_move = true

@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://djxocujv101rv"]
+[gd_scene load_steps=14 format=3 uid="uid://djxocujv101rv"]
 
 [ext_resource type="Script" uid="uid://bg0vq17nch41k" path="res://entities/player/player.gd" id="1_oul6g"]
 [ext_resource type="Texture2D" uid="uid://sfc3dmxkenyb" path="res://assets/entities/player/player_idle_south.png" id="2_rkbax"]
+[ext_resource type="Script" uid="uid://dor1nm2ft6qmm" path="res://entities/components/direction_manager.gd" id="3_qiwj3"]
 [ext_resource type="Script" uid="uid://gaci8hflnulx" path="res://entities/state_machine/state_machine.gd" id="3_qjkh3"]
 [ext_resource type="Script" uid="uid://d3rmvmgadojn0" path="res://entities/state_machine/default_states/nil.gd" id="4_g6k8r"]
 [ext_resource type="Script" uid="uid://t2choc08dcux" path="res://entities/player/states/walk_player.gd" id="5_boad6"]
@@ -52,12 +53,13 @@ animations = [{
 radius = 45.0
 height = 120.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine")]
 z_index = 100
 script = ExtResource("1_oul6g")
 base_max_speed = 5000.0
 base_acceleration = 1000.0
 base_drag = 0.4
+state_machine = NodePath("StateMachine")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_boad6")
@@ -66,6 +68,10 @@ animation = &"idle_south"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 60)
 shape = SubResource("CapsuleShape2D_oul6g")
+
+[node name="DirectionManager" type="Node" parent="."]
+script = ExtResource("3_qiwj3")
+metadata/_custom_type_script = "uid://dor1nm2ft6qmm"
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character")]
 script = ExtResource("3_qjkh3")

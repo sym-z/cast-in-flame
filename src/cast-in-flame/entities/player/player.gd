@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var base_max_speed: float = 1000
 @export var base_acceleration: float = 100
 @export var base_drag: float = 0.9
+@export var state_machine: StateMachine
 
 var can_move: bool = true
 
@@ -29,3 +30,18 @@ func decide_direction():
 func apply_state_modifiers():
 	#apply any movement modifiers from state to player
 	pass
+
+func get_direction() -> Vector2:
+	#mouse input case
+	if Input.get_connected_joypads().size() == 0:
+		var mouse_position = get_global_mouse_position()
+		return (mouse_position - self.position).normalized()
+	#joypad input case
+	else:
+		pass
+		#TODO bind the look inputs in the InputMap
+		#var look_dir = Input.get_vector("look_left", "look_right", "look_up", "look_down")
+		#look_dir = Vector2(Input.get_action_strength("look_right") - Input.get_action_strength("look_left"), 
+		#Input.get_action_strength("look_down")-Input.get_action_strength("look_up")).limit_length(1.0)
+	
+	return Vector2.ZERO
