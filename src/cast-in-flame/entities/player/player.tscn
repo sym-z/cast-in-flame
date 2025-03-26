@@ -1,7 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://djxocujv101rv"]
+[gd_scene load_steps=13 format=3 uid="uid://djxocujv101rv"]
 
-[ext_resource type="Script" uid="uid://bg0vq17nch41k" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://bg0vq17nch41k" path="res://entities/player/player.gd" id="1_oul6g"]
 [ext_resource type="Texture2D" uid="uid://sfc3dmxkenyb" path="res://assets/entities/player/player_idle_south.png" id="2_rkbax"]
+[ext_resource type="Script" uid="uid://gaci8hflnulx" path="res://entities/state_machine/state_machine.gd" id="3_qjkh3"]
+[ext_resource type="Script" uid="uid://d3rmvmgadojn0" path="res://entities/state_machine/default_states/nil.gd" id="4_g6k8r"]
+[ext_resource type="Script" uid="uid://t2choc08dcux" path="res://entities/player/states/walk_player.gd" id="5_boad6"]
+[ext_resource type="PackedScene" uid="uid://eob5cqds8ies" path="res://debug_tools/debug_camera/debug_camera.tscn" id="6_g6k8r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g1dw6"]
 atlas = ExtResource("2_rkbax")
@@ -45,15 +49,36 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oul6g"]
-radius = 60.0
-height = 230.0
+radius = 45.0
+height = 120.0
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 100
 script = ExtResource("1_oul6g")
+base_max_speed = 5000.0
+base_acceleration = 1000.0
+base_drag = 0.4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_boad6")
 animation = &"idle_south"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 60)
 shape = SubResource("CapsuleShape2D_oul6g")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("character")]
+script = ExtResource("3_qjkh3")
+default_state = "walk_player"
+character = NodePath("..")
+metadata/_custom_type_script = "uid://gaci8hflnulx"
+
+[node name="nil" type="Node" parent="StateMachine"]
+script = ExtResource("4_g6k8r")
+metadata/_custom_type_script = "uid://c8721g4uy17ti"
+
+[node name="walk_player" type="Node" parent="StateMachine"]
+script = ExtResource("5_boad6")
+metadata/_custom_type_script = "uid://c8721g4uy17ti"
+
+[node name="Debug Camera" parent="." instance=ExtResource("6_g6k8r")]
