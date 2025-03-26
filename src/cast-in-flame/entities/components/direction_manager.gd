@@ -15,7 +15,7 @@ func _physics_process(_delta: float) -> void:
 #func on_state_machine_changed()
 
 func get_look_vector():
-	#TODO, implement get_direction in player/enemies
+	#TODO, implement get_direction in enemies
 	var new_look_vector = character.get_direction()
 	
 	if abs(new_look_vector.x) > abs(new_look_vector.y):
@@ -26,4 +26,3 @@ func get_look_vector():
 	if look_vector != new_look_vector:
 		look_vector = new_look_vector
 		direction_changed.emit(look_vector)
-		print(look_vector)
