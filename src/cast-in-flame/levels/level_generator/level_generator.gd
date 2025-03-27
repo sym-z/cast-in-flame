@@ -10,17 +10,31 @@ class_name LevelGenerator
 # This is the distance between the edge of the map and the edge of the walk
 var edge_offset: int = 7
 var map: Map
+var layers: Dictionary[String, TileMapLayer]
 
 # Makes a map, fills it with tiles, walks and sets tiles' type, sets tile sprite
 func _ready():
 	map = Map.new()
 	map.config_map(map_size, edge_offset)
-	var room_instances = create_structures([chest_room,chest_room,chest_room,chest_room,chest_room,chest_room,])
+	var room_instances = create_structures([chest_room,chest_room,chest_room,chest_room,])
 	map.random_walk(floor_density)
+	map.print_map()
 	for instance in room_instances:
 		map.connect_to_map(instance.details)
 	map.print_map()
+	map.decide_all_walls()
 	render_tile_map()
+	layers = {
+		"north": $North,
+		"south": $South,
+		"east": $East,
+		"west": $West,
+		"nw": $NW,
+		"sw": $SW,
+		"ne": $NE,
+		"se": $SE,
+	}
+	render_walls()
 
 func render_tile_map():
 	'''
@@ -34,10 +48,25 @@ func render_tile_map():
 					floor_tiles.set_cell(Vector2i(x,y),0, Vector2i(randi_range(0,8), randi_range(0,8)))
 				elif tile_type == map.tile_types.STRUCTURE:
 					pass
-				else:
-					floor_tiles.set_cell(Vector2i(x,y),0, Vector2i(9, 9))
-			else:
-				floor_tiles.set_cell(Vector2i(x,y),0, Vector2i(9, 9))
+				
+func render_walls():
+	const tileset_coordinate = {
+		"north": Vector2i(0,0),
+		"west": Vector2i(0,1),
+		"east": Vector2i(1,0),
+		"south": Vector2i(2,0),
+		"nw":Vector2i(1,2),
+		"sw":Vector2i(0,2),
+		"ne":Vector2i(1,1),
+		"se":Vector2i(2,1)
+	}
+	
+	for x in map.size.x:
+		for y in map.size.y:
+			if map.get_tile_type(Vector2i(x,y)) == null:
+				var tile = map.get_tile(Vector2i(x,y))
+				for direction in tile.walls:
+					layers[direction].set_cell(Vector2i(x,y), 0, tileset_coordinate[direction] )
 
 func create_structures(structure_prefabs: Array[PackedScene]) -> Array[Node2D]:
 	var structure_instances: Array[Node2D] = []
