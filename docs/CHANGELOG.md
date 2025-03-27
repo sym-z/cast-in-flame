@@ -27,7 +27,8 @@
 - Fixed bug with connecting structures back to the map
 - Finalized plans for Mar24 meeting
 
-## version 0.2.2
+## version 0.3
 - Fixed bugs related to structure generation
 - Added wall auto tiling
 - Created player scaffold
+- Added direction manager
