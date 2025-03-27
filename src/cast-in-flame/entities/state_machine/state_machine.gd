@@ -2,7 +2,7 @@ class_name StateMachine
 extends Node
 
 #change to be a state node
-@export var default_state: String = "nil"
+@export var default_state: String = "Nil"
 @export var character: CharacterBody2D
 
 var state_names: Array[String] = []

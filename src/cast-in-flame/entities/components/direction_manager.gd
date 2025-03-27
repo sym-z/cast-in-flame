@@ -4,7 +4,7 @@ extends Node
 @onready var character: CharacterBody2D = get_parent()
 @onready var sm = character.state_machine
 
-var look_vector: Vector2
+var look_vector: Vector2 = Vector2.DOWN
 
 signal direction_changed(look_vector: Vector2)
 
@@ -20,9 +20,8 @@ func get_look_vector():
 	
 	if abs(new_look_vector.x) > abs(new_look_vector.y):
 		new_look_vector = Vector2(new_look_vector.x, 0).normalized()
-	elif abs(new_look_vector.x) < abs(new_look_vector.y):
+	elif abs(new_look_vector.x) <= abs(new_look_vector.y):
 		new_look_vector = Vector2(0, new_look_vector.y).normalized()
-	
-	if look_vector != new_look_vector:
+	if new_look_vector != Vector2.ZERO && look_vector != new_look_vector:
 		look_vector = new_look_vector
 		direction_changed.emit(look_vector)
