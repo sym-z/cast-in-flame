@@ -12,7 +12,7 @@ func _physics_process(_delta: float) -> void:
 	if sm != null && !sm.get_current_state_node().lock_direction:
 		get_look_vector()
 		
-#func on_state_machine_changed()
+# TODO: func on_state_machine_changed()
 
 func get_look_vector():
 	#TODO, implement get_direction in enemies
