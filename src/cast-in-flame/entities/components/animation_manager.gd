@@ -26,53 +26,7 @@ func _on_state_machine_state_changed(new_state_node):
 func _on_direction_manager_direction_changed(_look_vector):
 	update_anim()
 	
-	
-#func _on_state_machine_state_changed(new_state):
-	#""" 
-	#When the state machine changes states, it fires this signal. 
-	#This sets the animation name and calls a new animation. it also updates the callbacks collection.
-	#"""
-	#current_state = new_state
-	#callbacks = new_state.callbacks
-	#update_anim()
-	#func _on_direction_manager_direction_changed( direction):
-	#"""
-	#Updates sprite if direction changes.
-	#Buffers direction change if current state locks direction
-	#Direction buffer may need to move to another object. 
-	#"""
-	#current_direction = _direction_vec_to_string(direction)
-	#update_anim()
-#
-#func _direction_vec_to_string(direction):
-	#"""
-	#Converts direction vector to string
-	#"""
-#
 
-	#return direction_dict.get(direction , "south") # defaults to north
-#
-#func do_frame_callback(frm):
-	#var callback
-	#if callbacks: callback = callbacks.get(frm, null)
-	#if callback:
-		#if typeof(callback) == TYPE_ARRAY:
-			#for i in callback:
-				#i.call()
-		#else:
-			#callback.call()
-#
-#func _on_frame_changed():
-	#do_frame_callback(frame)
-#
-#func _on_animation_finished():
-	#var callback= callbacks.get("end", null)
-	#if callback:
-		#if typeof(callback) == TYPE_ARRAY:
-			#for i in callback:
-				#i.call()
-		#else:
-			#callback.call()
-#
-#func _on_animation_changed():
-	#do_frame_callback("start")
+func _on_animation_finished():
+	if current_state.has_method("animation_end"):
+		current_state.animation_end()

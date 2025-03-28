@@ -6,6 +6,8 @@ extends CharacterBody2D
 @export var base_drag: float = 0.9
 @export var state_machine: StateMachine
 @export var direction_manager: DirectionManager
+@export var hitbox: HitBox
+@export var hurtbox: HurtBox
 
 var can_move: bool = true
 

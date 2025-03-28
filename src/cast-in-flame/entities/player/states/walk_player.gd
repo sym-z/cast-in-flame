@@ -16,3 +16,5 @@ func update(_delta: float):
 	if player.velocity.length() <= 5:
 		player.state_machine.change_state("Idle Player")
 		return
+	elif Input.is_action_just_pressed("attack"):
+		player.state_machine.change_state("Attack Player")
