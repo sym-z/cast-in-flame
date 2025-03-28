@@ -13,11 +13,9 @@ var direction_dict : Dictionary[Vector2, String] = {
 }
 
 func update_anim():
-	print(character.direction_manager.look_vector, current_state)
 	var animation_name = "%s_%s" % [current_state.animation_name, direction_dict[character.direction_manager.look_vector]] 
 	if animation_name:
 		play(animation_name)
-	print(animation_name)
 	
 func _on_state_machine_state_changed(new_state_node):
 	current_state = new_state_node

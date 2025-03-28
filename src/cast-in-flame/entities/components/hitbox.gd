@@ -25,7 +25,8 @@ func move_to(target_position):
 func turn_on():
 	collision_shape.debug_color = Color (179, 57, 81, .5)
 	for area in overlapping_hurtboxes:
-		if area is HurtBox && area.detectable && ! (area in successful_hit):
+		if area is HurtBox: #&& area.detectable && ! (area in successful_hit):
+			print("HIT")
 			attempt_hit(area)
 	detecting = true
 	

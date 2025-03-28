@@ -1,14 +1,14 @@
 class_name HurtBox
 extends Area2D
 
-signal received_damage(damage:int)
+signal received_damage(damage: int)
 
 @onready var character: CharacterBody2D = get_parent()
 @export var timer: Timer
 @export var invincibility_time: float = .5
 @export var detectable: bool = false
 
-@export var collisionshape :CollisionShape2D
+@export var collision_shape: CollisionShape2D
 
 var overlapping_hitboxes = []
 var latest_hit_direction = Vector2.ZERO
@@ -20,4 +20,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	pass
+
+func hit_by(attacker: HitBox):
+	print("OUCH, ", attacker, " HURT ME")
 	pass

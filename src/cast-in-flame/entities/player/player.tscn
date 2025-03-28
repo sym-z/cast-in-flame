@@ -958,9 +958,8 @@ allow_swivel = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("RectangleShape2D_24ehl")
 
-[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("collisionshape")]
+[node name="Hurtbox" type="Area2D" parent="."]
 script = ExtResource("32_2soq1")
-collisionshape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, 16)

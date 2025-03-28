@@ -1,0 +1,93 @@
+[gd_scene load_steps=17 format=3 uid="uid://ccumbmdtae8j1"]
+
+[ext_resource type="Script" uid="uid://cn2ox0b6uqliw" path="res://entities/enemies/enemy.gd" id="1_gj3y3"]
+[ext_resource type="Texture2D" uid="uid://bgy00qoilcwm5" path="res://icon.svg" id="2_56i32"]
+[ext_resource type="Script" uid="uid://p5upl1t6dxxd" path="res://entities/components/animation_manager.gd" id="3_sb13e"]
+[ext_resource type="Script" uid="uid://dor1nm2ft6qmm" path="res://entities/components/direction_manager.gd" id="4_3udgd"]
+[ext_resource type="Script" uid="uid://gaci8hflnulx" path="res://entities/state_machine/state_machine.gd" id="5_vabdn"]
+[ext_resource type="Script" uid="uid://d3rmvmgadojn0" path="res://entities/state_machine/default_states/nil.gd" id="6_vabdn"]
+[ext_resource type="Script" uid="uid://bwlqxvwmbdwtb" path="res://entities/components/hitbox.gd" id="7_5xow2"]
+[ext_resource type="Script" uid="uid://deb1tlfss5y7c" path="res://entities/enemies/states/walk_enemy.gd" id="7_nrfwl"]
+[ext_resource type="Script" uid="uid://cit5ob8nk0mln" path="res://entities/enemies/states/idle_enemy.gd" id="8_5xow2"]
+[ext_resource type="Script" uid="uid://nwavdty23joo" path="res://entities/components/hurtbox.gd" id="8_xmuku"]
+[ext_resource type="PackedScene" uid="uid://eob5cqds8ies" path="res://debug_tools/debug_camera/debug_camera.tscn" id="9_56i32"]
+[ext_resource type="Script" uid="uid://cihn6m25n288s" path="res://entities/enemies/states/attack_enemy.gd" id="9_xmuku"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2ggct"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_56i32")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wy1il"]
+size = Vector2(130, 130)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gj3y3"]
+size = Vector2(130, 130)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_56i32"]
+size = Vector2(130, 130)
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "direction_manager", "hitbox", "hurtbox")]
+script = ExtResource("1_gj3y3")
+state_machine = NodePath("State Machine")
+direction_manager = NodePath("Direction Manager")
+hitbox = NodePath("HitBox")
+hurtbox = NodePath("HurtBox")
+
+[node name="Animation Manager" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("character")]
+sprite_frames = SubResource("SpriteFrames_2ggct")
+script = ExtResource("3_sb13e")
+character = NodePath("..")
+metadata/_custom_type_script = "uid://p5upl1t6dxxd"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wy1il")
+
+[node name="Direction Manager" type="Node" parent="."]
+script = ExtResource("4_3udgd")
+metadata/_custom_type_script = "uid://dor1nm2ft6qmm"
+
+[node name="State Machine" type="Node" parent="."]
+script = ExtResource("5_vabdn")
+metadata/_custom_type_script = "uid://gaci8hflnulx"
+
+[node name="Nil" type="Node" parent="State Machine"]
+script = ExtResource("6_vabdn")
+metadata/_custom_type_script = "uid://c8721g4uy17ti"
+
+[node name="Walk Enemy" type="Node" parent="State Machine"]
+script = ExtResource("7_nrfwl")
+metadata/_custom_type_script = "uid://c8721g4uy17ti"
+
+[node name="Idle Enemy" type="Node" parent="State Machine"]
+script = ExtResource("8_5xow2")
+metadata/_custom_type_script = "uid://c8721g4uy17ti"
+
+[node name="Attack Enemy" type="Node" parent="State Machine"]
+script = ExtResource("9_xmuku")
+metadata/_custom_type_script = "uid://c8721g4uy17ti"
+
+[node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("character", "collision_shape")]
+script = ExtResource("7_5xow2")
+character = NodePath("..")
+collision_shape = NodePath("CollisionShape2D")
+metadata/_custom_type_script = "uid://bwlqxvwmbdwtb"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("RectangleShape2D_gj3y3")
+
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("collision_shape")]
+script = ExtResource("8_xmuku")
+collision_shape = NodePath("CollisionShape2D")
+metadata/_custom_type_script = "uid://nwavdty23joo"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("RectangleShape2D_56i32")
+
+[node name="Debug Camera" parent="." instance=ExtResource("9_56i32")]
