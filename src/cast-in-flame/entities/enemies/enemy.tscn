@@ -74,6 +74,8 @@ script = ExtResource("9_xmuku")
 metadata/_custom_type_script = "uid://c8721g4uy17ti"
 
 [node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("character", "collision_shape")]
+collision_layer = 9
+collision_mask = 4
 script = ExtResource("7_5xow2")
 character = NodePath("..")
 collision_shape = NodePath("CollisionShape2D")
@@ -83,6 +85,8 @@ metadata/_custom_type_script = "uid://bwlqxvwmbdwtb"
 shape = SubResource("RectangleShape2D_gj3y3")
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("collision_shape")]
+collision_layer = 16
+collision_mask = 2
 script = ExtResource("8_xmuku")
 collision_shape = NodePath("CollisionShape2D")
 metadata/_custom_type_script = "uid://nwavdty23joo"

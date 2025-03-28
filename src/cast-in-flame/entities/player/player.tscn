@@ -950,6 +950,8 @@ metadata/_custom_type_script = "uid://c8721g4uy17ti"
 [node name="Debug Camera" parent="." instance=ExtResource("6_g6k8r")]
 
 [node name="Hitbox" type="Area2D" parent="." node_paths=PackedStringArray("character", "collision_shape")]
+collision_layer = 2
+collision_mask = 16
 script = ExtResource("31_vewsg")
 character = NodePath("..")
 collision_shape = NodePath("CollisionShape2D")
@@ -959,6 +961,8 @@ allow_swivel = true
 shape = SubResource("RectangleShape2D_24ehl")
 
 [node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
 script = ExtResource("32_2soq1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]

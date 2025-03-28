@@ -12,7 +12,6 @@ extends CharacterBody2D
 var can_move: bool = true
 var using_controller: bool = false
 func _input(event):
-	#print(event)
 	if event is InputEventMouseButton or event is InputEventKey:
 		using_controller = false
 	elif event is InputEventJoypadButton or (event is InputEventJoypadMotion and event.axis != 2):
@@ -53,4 +52,3 @@ func get_direction() -> Vector2:
 		look_dir = Vector2(Input.get_action_strength("look_right") - Input.get_action_strength("look_left"), Input.get_action_strength("look_down")-Input.get_action_strength("look_up")).limit_length(1.0)
 		return look_dir
 	
-	return Vector2.ZERO

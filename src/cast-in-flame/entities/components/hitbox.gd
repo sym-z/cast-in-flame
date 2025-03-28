@@ -12,7 +12,7 @@ extends Area2D
 var overlapping_hurtboxes: Array[HurtBox] = []
 var successful_hit: Array[HurtBox] = []
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if allow_swivel && !detecting:
 		move_to (character.get_direction().normalized() * distance_from_parent ) 
 		
@@ -20,7 +20,8 @@ func move_direction(direction):
 	move_to(direction * distance_from_parent)
 
 func move_to(target_position):
-	position = target_position
+	if target_position != Vector2.ZERO:
+		position = target_position
 	
 func turn_on():
 	collision_shape.debug_color = Color (179, 57, 81, .5)
@@ -50,5 +51,5 @@ func _on_area_entered(area):
 			attempt_hit(area)
 
 
-func _on_area_exited(area):
+func _on_area_exited(_area):
 	pass # Replace with function body.
