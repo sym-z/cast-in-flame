@@ -23,5 +23,6 @@ func _process(delta):
 	pass
 
 func hit_by(attacker: HitBox):
-	print("OUCH, ", attacker, " HURT ME")
+	#print("OUCH, ", attacker, " HURT ME")
+	
 	pass
