@@ -3,16 +3,16 @@ var is_active = false
 var lock_direction = true
 var animation_name = "attack"
 
-@onready var player: Player = get_parent().character
+@onready var character: CharacterBody2D = get_parent().character
 
 func enter():
-	player.hitbox.turn_on()
+	character.hitbox.turn_on()
 	
 func exit():
-	player.hitbox.turn_off()
+	character.hitbox.turn_off()
 	
 func update(_delta: float):
 	pass
 
 func animation_end():
-	player.state_machine.change_state("Idle Player")
+	character.state_machine.change_state("Idle Player")

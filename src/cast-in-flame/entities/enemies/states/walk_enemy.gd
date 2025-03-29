@@ -1,6 +1,6 @@
 extends State
 
-@onready var player: Player = get_parent().character
+@onready var player: CharacterBody2D = get_parent().character
 
 var is_active: bool = false
 var lock_direction: bool = false

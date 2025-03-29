@@ -6,6 +6,7 @@ class_name LevelGenerator
 @export var map_size: Vector2i = Vector2i(50,50)
 ## How densely packed the floor tiles are placed in bounds of the map
 @export_range(.01,.5) var floor_density: float = .3
+@export var player : Player
 @onready var chest_room: PackedScene = preload("res://levels/structures/chest_room/structure_chest_room.tscn")
 # This is the distance between the edge of the map and the edge of the walk
 var edge_offset: int = 7
@@ -18,10 +19,9 @@ func _ready():
 	map.config_map(map_size, edge_offset)
 	var room_instances = create_structures([chest_room,chest_room,chest_room,chest_room,])
 	map.random_walk(floor_density)
-	map.print_map()
 	for instance in room_instances:
 		map.connect_to_map(instance.details)
-	map.print_map()
+	#map.print_map()
 	map.decide_all_walls()
 	render_tile_map()
 	layers = {
@@ -35,6 +35,9 @@ func _ready():
 		"se": $SE,
 	}
 	render_walls()
+	place_player()
+	#print(map.tile_record)
+
 
 func render_tile_map():
 	'''
@@ -67,6 +70,7 @@ func render_walls():
 				var tile = map.get_tile(Vector2i(x,y))
 				for direction in tile.walls:
 					layers[direction].set_cell(Vector2i(x,y), 0, tileset_coordinate[direction] )
+					map.set_tile_type(map.tile_types.WALL, Vector2i(x,y))
 
 func create_structures(structure_prefabs: Array[PackedScene]) -> Array[Node2D]:
 	var structure_instances: Array[Node2D] = []
@@ -80,3 +84,22 @@ func create_structure(prefab: PackedScene) -> Node2D:
 	map.add_structure(instance.details)
 	instance.position = instance.details.origin * floor_tiles.tile_set.tile_size
 	return instance
+
+
+func tile_pos_to_world(pos):
+	return  pos * floor_tiles.tile_set.tile_size
+	
+
+
+func place_player():
+	# select random floor tile
+	var valid_tiles = map.tile_record[map.tile_types.FLOOR]
+	var chance = randi_range(0, valid_tiles.size())
+	var tile_pos = valid_tiles[chance].pos
+	var target_pos = tile_pos_to_world(tile_pos)
+	if player:
+		teleport(target_pos, player)
+	
+func teleport(pos, obj):
+	obj.position = pos
+	

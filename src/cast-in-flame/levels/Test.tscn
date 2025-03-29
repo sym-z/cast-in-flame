@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnx6i6kgrns3j"]
+
+[ext_resource type="PackedScene" uid="uid://ddjyw4ppjeiiv" path="res://levels/level_generator/level_generator.tscn" id="1_412ku"]
+[ext_resource type="PackedScene" uid="uid://djxocujv101rv" path="res://entities/player/player.tscn" id="2_0lldd"]
+[ext_resource type="PackedScene" uid="uid://ccumbmdtae8j1" path="res://entities/enemies/enemy.tscn" id="3_0lldd"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Level Generator" parent="." node_paths=PackedStringArray("player") instance=ExtResource("1_412ku")]
+player = NodePath("../Player")
+
+[node name="Player" parent="." instance=ExtResource("2_0lldd")]
+
+[node name="Enemy" parent="." instance=ExtResource("3_0lldd")]
+position = Vector2(3216, 2804)
+
+[node name="State Machine" parent="Enemy" index="3"]
+default_state = "Pursuit Enemy"
+
+[node name="Pursuit Enemy" parent="Enemy/State Machine" index="4" node_paths=PackedStringArray("player")]
+player = NodePath("../../../Player")
+
+[editable path="Enemy"]

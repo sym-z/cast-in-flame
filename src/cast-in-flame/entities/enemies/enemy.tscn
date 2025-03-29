@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ccumbmdtae8j1"]
+[gd_scene load_steps=18 format=3 uid="uid://ccumbmdtae8j1"]
 
 [ext_resource type="Script" uid="uid://cn2ox0b6uqliw" path="res://entities/enemies/enemy.gd" id="1_gj3y3"]
 [ext_resource type="Texture2D" uid="uid://bgy00qoilcwm5" path="res://icon.svg" id="2_56i32"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://nwavdty23joo" path="res://entities/components/hurtbox.gd" id="8_xmuku"]
 [ext_resource type="PackedScene" uid="uid://eob5cqds8ies" path="res://debug_tools/debug_camera/debug_camera.tscn" id="9_56i32"]
 [ext_resource type="Script" uid="uid://cihn6m25n288s" path="res://entities/enemies/states/attack_enemy.gd" id="9_xmuku"]
+[ext_resource type="Script" uid="uid://d2knpljedht3j" path="res://entities/enemies/states/pursuit_enemy.gd" id="10_nrfwl"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2ggct"]
 animations = [{
@@ -53,8 +54,9 @@ shape = SubResource("RectangleShape2D_wy1il")
 script = ExtResource("4_3udgd")
 metadata/_custom_type_script = "uid://dor1nm2ft6qmm"
 
-[node name="State Machine" type="Node" parent="."]
+[node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("character")]
 script = ExtResource("5_vabdn")
+character = NodePath("..")
 metadata/_custom_type_script = "uid://gaci8hflnulx"
 
 [node name="Nil" type="Node" parent="State Machine"]
@@ -72,6 +74,9 @@ metadata/_custom_type_script = "uid://c8721g4uy17ti"
 [node name="Attack Enemy" type="Node" parent="State Machine"]
 script = ExtResource("9_xmuku")
 metadata/_custom_type_script = "uid://c8721g4uy17ti"
+
+[node name="Pursuit Enemy" type="Node" parent="State Machine"]
+script = ExtResource("10_nrfwl")
 
 [node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("character", "collision_shape")]
 collision_layer = 9

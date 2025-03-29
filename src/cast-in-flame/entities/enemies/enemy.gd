@@ -16,4 +16,5 @@ func get_direction():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	move_and_slide()
 	pass

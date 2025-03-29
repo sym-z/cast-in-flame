@@ -6,11 +6,17 @@ var size : Vector2i
 # The map itself - double array of tiles 
 var matrix = []
 var edge_offset: int
+
 enum tile_types {
 	FLOOR,
 	WALL,
 	STRUCTURE,
 }
+
+# Dictionary of tile type
+# Each value stores an array of tiles of that type
+var tile_record : Dictionary[tile_types, Array ] = {}
+
 
 #TODO add world seed support
 func config_map(arg_size: Vector2i, arg_edge_offset: int = 0):
@@ -19,12 +25,17 @@ func config_map(arg_size: Vector2i, arg_edge_offset: int = 0):
 	It allocates memory for the tile instances
 	"""
 	assert (arg_size.x >= 0 && arg_size.y >= 0, "Map size invalid")
+	for tile_type in tile_types:
+		tile_record[tile_types[tile_type] ] = []
+	
 	edge_offset = arg_edge_offset
+	
 	size = arg_size
 	for x in range(size.x):
 		matrix.append([])
 		for y in range(size.y):
 			matrix[x].append(Tile.new())
+			matrix[x][y].pos = Vector2i(x,y)
 
 func add_structure(structure: StructureDetails):
 	for i in range(20):
@@ -34,8 +45,7 @@ func add_structure(structure: StructureDetails):
 				for x in range(structure.size.x):
 					for y in range(structure.size.y):
 						var pos = origin + Vector2i(x,y)
-						var tile = get_tile(pos)
-						tile.type = tile_types.STRUCTURE
+						set_tile_type(tile_types.STRUCTURE, pos)
 				structure.origin = origin
 				return
 
@@ -83,8 +93,8 @@ func connect_to_map(structure: StructureDetails):
 		if look_type == tile_types.FLOOR || walk_pos == origin:
 			return
 		if look_type != tile_types.STRUCTURE:
-			var tile = get_tile(walk_pos)
-			tile.type = tile_types.FLOOR
+			set_tile_type(tile_types.FLOOR, walk_pos)
+
 		
 func structure_in_bounds(structure: StructureDetails, pos: Vector2i) -> bool:
 	if in_bounds(pos) and  in_bounds(pos + structure.size):
@@ -121,7 +131,7 @@ func random_walk(floor_density: float):
 	while placed_tiles < tiles_to_walk:
 		var look_tile = get_tile(walk_pos)
 		if look_tile.type == null:
-			look_tile.type = tile_types.FLOOR
+			set_tile_type(tile_types.FLOOR, walk_pos)
 			placed_tiles += 1
 		
 		walk_pos += pick_random_direction()
@@ -207,3 +217,13 @@ func decide_walls(pos: Vector2i):
 				
 		if place_wall: 
 			tile.walls.append(direction)
+
+
+func set_tile_type(tile_type, pos):
+	var tile = get_tile(pos)
+	
+	if tile.type != null:
+		tile_record[tile.type].erase(tile)
+	
+	tile.type = tile_type
+	tile_record[tile_type].append(tile)
