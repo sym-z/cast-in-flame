@@ -7,17 +7,21 @@
 [node name="Test" type="Node2D"]
 
 [node name="Level Generator" parent="." node_paths=PackedStringArray("player") instance=ExtResource("1_412ku")]
+floor_density = 0.471
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_0lldd")]
 
 [node name="Enemy" parent="." instance=ExtResource("3_0lldd")]
-position = Vector2(3216, 2804)
+position = Vector2(7861, 3341)
 
 [node name="State Machine" parent="Enemy" index="3"]
 default_state = "Pursuit Enemy"
 
 [node name="Pursuit Enemy" parent="Enemy/State Machine" index="4" node_paths=PackedStringArray("player")]
 player = NodePath("../../../Player")
+
+[node name="Navigator" parent="Enemy" index="7" node_paths=PackedStringArray("my_target")]
+my_target = NodePath("../../Player")
 
 [editable path="Enemy"]

@@ -7,14 +7,16 @@ class_name LevelGenerator
 ## How densely packed the floor tiles are placed in bounds of the map
 @export_range(.01,.5) var floor_density: float = .3
 @export var player : Player
+@export var nav_mesh_maker: NavMeshMaker
 @onready var chest_room: PackedScene = preload("res://levels/structures/chest_room/structure_chest_room.tscn")
 # This is the distance between the edge of the map and the edge of the walk
 var edge_offset: int = 7
 var map: Map
 var layers: Dictionary[String, TileMapLayer]
-
+var tile_size
 # Makes a map, fills it with tiles, walks and sets tiles' type, sets tile sprite
 func _ready():
+	tile_size = floor_tiles.tile_set.tile_size
 	map = Map.new()
 	map.config_map(map_size, edge_offset)
 	var room_instances = create_structures([chest_room,chest_room,chest_room,chest_room,])
@@ -35,6 +37,8 @@ func _ready():
 		"se": $SE,
 	}
 	render_walls()
+	nav_mesh_maker.make_mesh(get_corners())
+	
 	place_player()
 	#print(map.tile_record)
 
@@ -51,6 +55,7 @@ func render_tile_map():
 					floor_tiles.set_cell(Vector2i(x,y),0, Vector2i(randi_range(0,8), randi_range(0,8)))
 				elif tile_type == map.tile_types.STRUCTURE:
 					pass
+
 				
 func render_walls():
 	const tileset_coordinate = {
@@ -103,3 +108,18 @@ func place_player():
 func teleport(pos, obj):
 	obj.position = pos
 	
+
+
+func get_corners():
+	# Used the extra distance to debug 
+	var extra_distance = Vector2(0,0)
+	var top_left = Vector2(-extra_distance.x,-extra_distance.y)
+	var top_right = Vector2((tile_size.x * map_size.x)+ extra_distance.x, -extra_distance.y)
+	var bot_right = Vector2((tile_size.x * map_size.x)+ extra_distance.x, (tile_size.y * map_size.y) + extra_distance.y)
+	var bot_left = Vector2(-extra_distance.x,(tile_size.y * map_size.y) + extra_distance.y)
+	return PackedVector2Array([
+		top_left, 
+		top_right,
+		bot_right,
+		bot_left
+	])

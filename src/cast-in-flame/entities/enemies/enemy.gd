@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var direction_manager: DirectionManager
 @export var hitbox: HitBox
 @export var hurtbox: HurtBox
+@export var navigator: Navigator
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ccumbmdtae8j1"]
+[gd_scene load_steps=19 format=3 uid="uid://ccumbmdtae8j1"]
 
 [ext_resource type="Script" uid="uid://cn2ox0b6uqliw" path="res://entities/enemies/enemy.gd" id="1_gj3y3"]
 [ext_resource type="Texture2D" uid="uid://bgy00qoilcwm5" path="res://icon.svg" id="2_56i32"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://eob5cqds8ies" path="res://debug_tools/debug_camera/debug_camera.tscn" id="9_56i32"]
 [ext_resource type="Script" uid="uid://cihn6m25n288s" path="res://entities/enemies/states/attack_enemy.gd" id="9_xmuku"]
 [ext_resource type="Script" uid="uid://d2knpljedht3j" path="res://entities/enemies/states/pursuit_enemy.gd" id="10_nrfwl"]
+[ext_resource type="Script" uid="uid://110baj7c72h0" path="res://entities/components/navigator.gd" id="14_5xow2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2ggct"]
 animations = [{
@@ -34,12 +35,13 @@ size = Vector2(130, 130)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_56i32"]
 size = Vector2(130, 130)
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "direction_manager", "hitbox", "hurtbox")]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "direction_manager", "hitbox", "hurtbox", "navigator")]
 script = ExtResource("1_gj3y3")
 state_machine = NodePath("State Machine")
 direction_manager = NodePath("Direction Manager")
 hitbox = NodePath("HitBox")
 hurtbox = NodePath("HurtBox")
+navigator = NodePath("Navigator")
 
 [node name="Animation Manager" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("character")]
 sprite_frames = SubResource("SpriteFrames_2ggct")
@@ -100,3 +102,7 @@ metadata/_custom_type_script = "uid://nwavdty23joo"
 shape = SubResource("RectangleShape2D_56i32")
 
 [node name="Debug Camera" parent="." instance=ExtResource("9_56i32")]
+
+[node name="Navigator" type="NavigationAgent2D" parent="." node_paths=PackedStringArray("character")]
+script = ExtResource("14_5xow2")
+character = NodePath("..")

@@ -1,37 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddjyw4ppjeiiv"]
+[gd_scene load_steps=6 format=3 uid="uid://ddjyw4ppjeiiv"]
 
 [ext_resource type="Script" uid="uid://blf43tknsgvhe" path="res://levels/level_generator/level_generator.gd" id="1_mpksv"]
 [ext_resource type="TileSet" uid="uid://b3v7yvqhhl7g5" path="res://levels/level_generator/floors.tres" id="2_mt14d"]
 [ext_resource type="TileSet" uid="uid://ocgd1s8cx3p4" path="res://levels/level_generator/walls.tres" id="4_breqj"]
+[ext_resource type="Script" uid="uid://dh8xwnnuwajbe" path="res://levels/level_generator/nav_mesh_maker.gd" id="4_ilv64"]
 
-[node name="Level Generator" type="Node2D" node_paths=PackedStringArray("floor_tiles")]
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ddkj2"]
+
+[node name="Level Generator" type="Node2D" node_paths=PackedStringArray("floor_tiles", "nav_mesh_maker")]
 script = ExtResource("1_mpksv")
 floor_tiles = NodePath("Floor Tiles")
 floor_density = 0.25
+nav_mesh_maker = NodePath("NavigationRegion2D")
 
 [node name="Floor Tiles" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_mt14d")
 
-[node name="North" type="TileMapLayer" parent="."]
+[node name="North" type="TileMapLayer" parent="." groups=["pathfinder_collision"]]
 tile_set = ExtResource("4_breqj")
 
-[node name="South" type="TileMapLayer" parent="."]
+[node name="South" type="TileMapLayer" parent="." groups=["pathfinder_collision"]]
 tile_set = ExtResource("4_breqj")
 
-[node name="East" type="TileMapLayer" parent="."]
+[node name="East" type="TileMapLayer" parent="." groups=["pathfinder_collision"]]
 tile_set = ExtResource("4_breqj")
 
-[node name="West" type="TileMapLayer" parent="."]
+[node name="West" type="TileMapLayer" parent="." groups=["pathfinder_collision"]]
 tile_set = ExtResource("4_breqj")
 
-[node name="NW" type="TileMapLayer" parent="."]
+[node name="NW" type="TileMapLayer" parent="." groups=["pathfinder_collision"]]
 tile_set = ExtResource("4_breqj")
 
-[node name="NE" type="TileMapLayer" parent="."]
+[node name="NE" type="TileMapLayer" parent="." groups=["pathfinder_collision"]]
 tile_set = ExtResource("4_breqj")
 
-[node name="SW" type="TileMapLayer" parent="."]
+[node name="SW" type="TileMapLayer" parent="." groups=["pathfinder_collision"]]
 tile_set = ExtResource("4_breqj")
 
-[node name="SE" type="TileMapLayer" parent="."]
+[node name="SE" type="TileMapLayer" parent="." groups=["pathfinder_collision"]]
 tile_set = ExtResource("4_breqj")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_ddkj2")
+script = ExtResource("4_ilv64")
